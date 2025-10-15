@@ -74,7 +74,6 @@
             height="0.02" 
             color="black">
         </a-cylinder>
-        <a-sphere 
     id="mole-1"
     position="-2 -0.5 -2" 
     radius="0.3" 
@@ -82,6 +81,7 @@
     class="mole">
 </a-sphere>
         
+        <a-sphere 
         <!-- Basic lighting -->
         <a-light type="ambient" color="#404040"></a-light>
         <a-light type="point" position="0 10 0" color="white"></a-light>
@@ -89,5 +89,30 @@
 
 
     </a-scene>
+    <a-scene>
+    <!-- Your game board -->
+    <a-box position="0 0 -3" width="6" height="0.2" depth="4" color="brown"></a-box>
+    
+    <!-- Your holes -->
+    <a-cylinder position="-2 0.11 -2" radius="0.4" height="0.02" color="black"></a-cylinder>
+    <!-- ... all your other holes ... -->
+    
+    <!-- PUT THE MOLES HERE - after the board and holes -->
+    <a-sphere 
+        id="mole-1"
+        position="-2 -0.5 -2" 
+        radius="0.3" 
+        color="brown"
+        animation__up="property: position; to: -2 0.3 -2; dur: 800; startEvents: popup"
+        animation__down="property: position; to: -2 -0.5 -2; dur: 800; startEvents: popdown">
+    </a-sphere>
+    
+    <!-- Add more moles here -->
+    
+    <!-- Your lighting -->
+    <a-light type="ambient" color="#404040"></a-light>
+    <a-light type="point" position="0 10 0"></a-light>
+</a-scene>
+
 </body>
 </html>
