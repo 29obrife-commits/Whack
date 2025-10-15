@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <title>Whack-a-Mole Game</title>
+</head>
+<body>
+    <a-scene>
+        <!-- Game board/table -->
+        <a-box 
+            id="game-board"
+            position="0 0 -3" 
+            width="6" 
+            height="0.2" 
+            depth="4" 
+            color="brown">
+        </a-box>
+        
+        <!-- Holes where moles will appear (3x3 grid) -->
+        <a-cylinder 
+            position="-2 0.11 -2" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        <a-cylinder 
+            position="0 0.11 -2" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        <a-cylinder 
+            position="2 0.11 -2" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        
+        <!-- Add more holes for middle and bottom rows -->
+        <a-cylinder 
+            position="-2 0.11 -3" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        <a-cylinder 
+            position="0 0.11 -3" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        <a-cylinder 
+            position="2 0.11 -3" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        
+        <a-cylinder 
+            position="-2 0.11 -4" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        <a-cylinder 
+            position="0 0.11 -4" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        <a-cylinder 
+            position="2 0.11 -4" 
+            radius="0.4" 
+            height="0.02" 
+            color="black">
+        </a-cylinder>
+        
+        <!-- Basic lighting -->
+        <a-light type="ambient" color="#404040"></a-light>
+        <a-light type="point" position="0 10 0" color="white"></a-light>
+    </a-scene>
+</body>
+</html>
