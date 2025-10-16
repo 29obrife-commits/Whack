@@ -8,7 +8,6 @@
     <a-scene>
         <!-- Game board/table -->
         <a-box 
-            id="game-board"
             position="0 0 -3" 
             width="6" 
             height="0.2" 
@@ -16,103 +15,64 @@
             color="brown">
         </a-box>
         
-        <!-- Holes where moles will appear (3x3 grid) -->
-        <a-cylinder 
-            position="-2 0.11 -2" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
-        <a-cylinder 
-            position="0 0.11 -2" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
-        <a-cylinder 
-            position="2 0.11 -2" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
+        <!-- Holes (3x3 grid) -->
+        <a-cylinder position="-2 0.11 -2" radius="0.4" height="0.02" color="black"></a-cylinder>
+        <a-cylinder position="0 0.11 -2" radius="0.4" height="0.02" color="black"></a-cylinder>
+        <a-cylinder position="2 0.11 -2" radius="0.4" height="0.02" color="black"></a-cylinder>
         
-        <!-- Add more holes for middle and bottom rows -->
-        <a-cylinder 
-            position="-2 0.11 -3" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
-        <a-cylinder 
-            position="0 0.11 -3" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
-        <a-cylinder 
-            position="2 0.11 -3" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
+        <a-cylinder position="-2 0.11 -3" radius="0.4" height="0.02" color="black"></a-cylinder>
+        <a-cylinder position="0 0.11 -3" radius="0.4" height="0.02" color="black"></a-cylinder>
+        <a-cylinder position="2 0.11 -3" radius="0.4" height="0.02" color="black"></a-cylinder>
         
-        <a-cylinder 
-            position="-2 0.11 -4" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
-        <a-cylinder 
-            position="0 0.11 -4" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
-        <a-cylinder 
-            position="2 0.11 -4" 
-            radius="0.4" 
-            height="0.02" 
-            color="black">
-        </a-cylinder>
-    id="mole-1"
-    position="-2 -0.5 -2" 
-    radius="0.3" 
-    color="yellow"
-    class="mole">
-</a-sphere>
+        <a-cylinder position="-2 0.11 -4" radius="0.4" height="0.02" color="black"></a-cylinder>
+        <a-cylinder position="0 0.11 -4" radius="0.4" height="0.02" color="black"></a-cylinder>
+        <a-cylinder position="2 0.11 -4" radius="0.4" height="0.02" color="black"></a-cylinder>
+        
+        <!-- Moles -->
+        <a-sphere 
+            id="mole-1"
+            position="-2 -0.5 -2" 
+            radius="0.3" 
+            color="brown"
+            animation__up="property: position; to: -2 0.3 -2; dur: 800; startEvents: popup"
+            animation__down="property: position; to: -2 -0.5 -2; dur: 800; startEvents: popdown">
+        </a-sphere>
         
         <a-sphere 
-        <!-- Basic lighting -->
+            id="mole-2"
+            position="0 -0.5 -2" 
+            radius="0.3" 
+            color="brown"
+            animation__up="property: position; to: 0 0.3 -2; dur: 800; startEvents: popup"
+            animation__down="property: position; to: 0 -0.5 -2; dur: 800; startEvents: popdown">
+        </a-sphere>
+        
+        <a-sphere 
+            id="mole-3"
+            position="2 -0.5 -2" 
+            radius="0.3" 
+            color="brown"
+            animation__up="property: position; to: 2 0.3 -2; dur: 800; startEvents: popup"
+            animation__down="property: position; to: 2 -0.5 -2; dur: 800; startEvents: popdown">
+        </a-sphere>
+        
+        <!-- Lighting -->
         <a-light type="ambient" color="#404040"></a-light>
         <a-light type="point" position="0 10 0" color="white"></a-light>
-    <!-- Add these mole objects inside your a-scene, after the holes -->
-
-
     </a-scene>
-    <a-scene>
-    <!-- Your game board -->
-    <a-box position="0 0 -3" width="6" height="0.2" depth="4" color="brown"></a-box>
     
-    <!-- Your holes -->
-    <a-cylinder position="-2 0.11 -2" radius="0.4" height="0.02" color="black"></a-cylinder>
-    <!-- ... all your other holes ... -->
-    
-    <!-- PUT THE MOLES HERE - after the board and holes -->
-    <a-sphere 
-        id="mole-1"
-        position="-2 -0.5 -2" 
-        radius="0.3" 
-        color="brown"
-        animation__up="property: position; to: -2 0.3 -2; dur: 800; startEvents: popup"
-        animation__down="property: position; to: -2 -0.5 -2; dur: 800; startEvents: popdown">
-    </a-sphere>
-    
-    <!-- Add more moles here -->
-    
-    <!-- Your lighting -->
-    <a-light type="ambient" color="#404040"></a-light>
-    <a-light type="point" position="0 10 0"></a-light>
-</a-scene>
-
+    <script>
+        function popupMole(moleId) {
+            const mole = document.querySelector(moleId);
+            mole.emit('popup');
+            setTimeout(() => {
+                mole.emit('popdown');
+            }, 2000);
+        }
+        
+        setTimeout(() => popupMole('#mole-1'), 1000);
+        setTimeout(() => popupMole('#mole-2'), 3000);
+        setTimeout(() => popupMole('#mole-3'), 5000);
+    </script>
 </body>
 </html>
