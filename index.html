@@ -61,18 +61,33 @@
         <a-light type="point" position="0 10 0" color="white"></a-light>
     </a-scene>
     
-    <script>
-        function popupMole(moleId) {
-            const mole = document.querySelector(moleId);
-            mole.emit('popup');
-            setTimeout(() => {
-                mole.emit('popdown');
-            }, 2000);
-        }
-        
-        setTimeout(() => popupMole('#mole-1'), 1000);
-        setTimeout(() => popupMole('#mole-2'), 3000);
-        setTimeout(() => popupMole('#mole-3'), 5000);
-    </script>
+   <script>
+    let score = 0;
+    
+    function popupMole(moleId) {
+        const mole = document.querySelector(moleId);
+        mole.emit('popup');
+        setTimeout(() => {
+            mole.emit('popdown');
+        }, 2000);
+    }
+    
+    // Add click listeners to all moles
+    document.addEventListener('DOMContentLoaded', function() {
+        const moles = document.querySelectorAll('.clickable');
+        moles.forEach(mole => {
+            mole.addEventListener('click', function() {
+                score++;
+                console.log('Hit! Score:', score);
+                this.emit('popdown'); // Make mole go down when clicked
+            });
+        });
+    });
+    
+    setTimeout(() => popupMole('#mole-1'), 1000);
+    setTimeout(() => popupMole('#mole-2'), 3000);
+    setTimeout(() => popupMole('#mole-3'), 5000);
+</script>
+
 </body>
 </html>
