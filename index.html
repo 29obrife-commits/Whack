@@ -28,12 +28,14 @@
         <a-cylinder position="0 0.11 -4" radius="0.4" height="0.02" color="black"></a-cylinder>
         <a-cylinder position="2 0.11 -4" radius="0.4" height="0.02" color="black"></a-cylinder>
         
-        <!-- Moles -->
+        <!-- Clickable Moles -->
         <a-sphere 
             id="mole-1"
             position="-2 -0.5 -2" 
             radius="0.3" 
             color="brown"
+            cursor="rayOrigin: mouse"
+            class="clickable"
             animation__up="property: position; to: -2 0.3 -2; dur: 800; startEvents: popup"
             animation__down="property: position; to: -2 -0.5 -2; dur: 800; startEvents: popdown">
         </a-sphere>
@@ -43,6 +45,8 @@
             position="0 -0.5 -2" 
             radius="0.3" 
             color="brown"
+            cursor="rayOrigin: mouse"
+            class="clickable"
             animation__up="property: position; to: 0 0.3 -2; dur: 800; startEvents: popup"
             animation__down="property: position; to: 0 -0.5 -2; dur: 800; startEvents: popdown">
         </a-sphere>
@@ -52,6 +56,8 @@
             position="2 -0.5 -2" 
             radius="0.3" 
             color="brown"
+            cursor="rayOrigin: mouse"
+            class="clickable"
             animation__up="property: position; to: 2 0.3 -2; dur: 800; startEvents: popup"
             animation__down="property: position; to: 2 -0.5 -2; dur: 800; startEvents: popdown">
         </a-sphere>
@@ -59,35 +65,61 @@
         <!-- Lighting -->
         <a-light type="ambient" color="#404040"></a-light>
         <a-light type="point" position="0 10 0" color="white"></a-light>
+        
+        <!-- Camera with cursor -->
+        <a-camera>
+            <a-cursor color="red"></a-cursor>
+        </a-camera>
     </a-scene>
     
-   <script>
-    let score = 0;
+    <div style="position: absolute; top: 10px; left: 10px; color: white; font-size: 24px;">
+        Score: <span id="score">0</span>
+    </div>
     
-    function popupMole(moleId) {
-        const mole = document.querySelector(moleId);
-        mole.emit('popup');
-        setTimeout(() => {
-            mole.emit('popdown');
-        }, 2000);
-    }
-    
-    // Add click listeners to all moles
-    document.addEventListener('DOMContentLoaded', function() {
-        const moles = document.querySelectorAll('.clickable');
-        moles.forEach(mole => {
-            mole.addEventListener('click', function() {
-                score++;
-                console.log('Hit! Score:', score);
-                this.emit('popdown'); // Make mole go down when clicked
+    <script>
+        let score = 0;
+        
+        function popupMole(moleId) {
+            const mole = document.querySelector(moleId);
+            mole.emit('popup');
+            setTimeout(() => {
+                mole.emit('popdown');
+            }, 2000);
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+        
+        // Add click listeners to all moles
+        document.addEventListener('DOMContentLoaded', function() {
+            const moles = document.querySelectorAll('.clickable');
+            moles.forEach(mole => {
+                mole.addEventListener('click', function() {
+                    score++;
+                    updateScore();
+                    console.log('Whacked! Score:', score);
+                    this.emit('popdown'); // Make mole go down when whacked
+                    
+                    // Flash the mole red when hit
+                    this.setAttribute('color', 'red');
+                    setTimeout(() => {
+                        this.setAttribute('color', 'brown');
+                    }, 200);
+                });
             });
         });
-    });
-    
-    setTimeout(() => popupMole('#mole-1'), 1000);
-    setTimeout(() => popupMole('#mole-2'), 3000);
-    setTimeout(() => popupMole('#mole-3'), 5000);
-</script>
-
+        
+        // Start the game with mole popups
+        setTimeout(() => popupMole('#mole-1'), 1000);
+        setTimeout(() => popupMole('#mole-2'), 3000);
+        setTimeout(() => popupMole('#mole-3'), 5000);
+        
+        // Keep game going with random moles
+        setInterval(() => {
+            const randomMole = Math.floor(Math.random() * 3) + 1;
+            popupMole('#mole-' + randomMole);
+        }, 2500);
+    </script>
 </body>
 </html>
